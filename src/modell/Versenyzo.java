@@ -6,6 +6,14 @@ public class Versenyzo {
     private double atlag;
     private int elsoDb;
 
+    public Versenyzo(String sor) {
+        String[] adatok = sor.split(" ");
+        nev = adatok[0];
+        email = adatok[1];
+        atlag = Double.parseDouble(adatok[2]);
+        elsoDb = Integer.parseInt(adatok[3]);
+    }
+
     public Versenyzo(String nev, String email, double atlag, int elsoDb) {
         this.nev = nev;
         this.email = email;

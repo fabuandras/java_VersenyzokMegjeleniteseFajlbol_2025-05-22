@@ -137,14 +137,8 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
     private void mnuPrgBeFajlbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPrgBeFajlbolActionPerformed
         try {
             String sor = Files.readString(Path.of("versenyzok.txt"));
-            
-            String[] adatok = sor.split(" ");
-            String nev = adatok[0];
-            String email = adatok[1];
-            double atlag = Double.parseDouble(adatok[2]);
-            int elsoDb = Integer.parseInt(adatok[3]);
         
-            Versenyzo versenyzo = new Versenyzo(nev, email, atlag, elsoDb);
+            Versenyzo versenyzo = new Versenyzo(sor);
             
             txtVersenyzoNev.setText(versenyzo.getNev());
             txtVersenyzoEmail.setText(versenyzo.getEmail());
