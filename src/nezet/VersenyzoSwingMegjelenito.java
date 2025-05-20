@@ -34,6 +34,7 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuPrg = new javax.swing.JMenu();
         mnuPrgBeFajlbol = new javax.swing.JMenuItem();
+        mnuPrgFix = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("OOP fájlkezelés");
@@ -109,6 +110,14 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
         });
         mnuPrg.add(mnuPrgBeFajlbol);
 
+        mnuPrgFix.setText("Fix versenyző megjelenítése");
+        mnuPrgFix.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPrgFixActionPerformed(evt);
+            }
+        });
+        mnuPrg.add(mnuPrgFix);
+
         jMenuBar1.add(mnuPrg);
 
         setJMenuBar(jMenuBar1);
@@ -149,6 +158,14 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
             Logger.getLogger(VersenyzoSwingMegjelenito.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_mnuPrgBeFajlbolActionPerformed
+
+    private void mnuPrgFixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPrgFixActionPerformed
+        Versenyzo versenyzo = new Versenyzo("RókaRudi", "rr@r.hu", Math.E, 21);
+        txtVersenyzoNev.setText(versenyzo.getNev());
+        txtVersenyzoEmail.setText(versenyzo.getEmail());
+        txtVersenyzoAtlag.setText(versenyzo.getAtlag()+"");
+        numVersenyzoElsoDb.setValue(versenyzo.getElsoDb());
+    }//GEN-LAST:event_mnuPrgFixActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,6 +211,7 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenu mnuPrg;
     private javax.swing.JMenuItem mnuPrgBeFajlbol;
+    private javax.swing.JMenuItem mnuPrgFix;
     private javax.swing.JSpinner numVersenyzoElsoDb;
     private javax.swing.JTextField txtVersenyzoAtlag;
     private javax.swing.JTextField txtVersenyzoEmail;
