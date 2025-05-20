@@ -1,18 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package nezet;
 
-/**
- *
- * @author csolti
- */
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modell.Versenyzo;
+
 public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VersenyzoSwingMegjelenito
-     */
     public VersenyzoSwingMegjelenito() {
         initComponents();
     }
@@ -36,8 +32,8 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         numVersenyzoElsoDb = new javax.swing.JSpinner();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        mnuPrg = new javax.swing.JMenu();
+        mnuPrgBeFajlbol = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("OOP fájlkezelés");
@@ -103,12 +99,17 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jMenu1.setText("Program");
+        mnuPrg.setText("Program");
 
-        jMenuItem1.setText("Betöltés fájlból");
-        jMenu1.add(jMenuItem1);
+        mnuPrgBeFajlbol.setText("Betöltés fájlból");
+        mnuPrgBeFajlbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPrgBeFajlbolActionPerformed(evt);
+            }
+        });
+        mnuPrg.add(mnuPrgBeFajlbol);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(mnuPrg);
 
         setJMenuBar(jMenuBar1);
 
@@ -132,6 +133,28 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mnuPrgBeFajlbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPrgBeFajlbolActionPerformed
+        try {
+            String sor = Files.readString(Path.of("versenyzok.txt"));
+            
+            String[] adatok = sor.split(" ");
+            String nev = adatok[0];
+            String email = adatok[1];
+            double atlag = Double.parseDouble(adatok[2]);
+            int elsoDb = Integer.parseInt(adatok[3]);
+        
+            Versenyzo versenyzo = new Versenyzo(nev, email, atlag, elsoDb);
+            
+            txtVersenyzoNev.setText(versenyzo.getNev());
+            txtVersenyzoEmail.setText(versenyzo.getEmail());
+            txtVersenyzoAtlag.setText(versenyzo.getAtlag()+"");
+            numVersenyzoElsoDb.setValue(versenyzo.getElsoDb());
+            
+        } catch (IOException ex) {
+            Logger.getLogger(VersenyzoSwingMegjelenito.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_mnuPrgBeFajlbolActionPerformed
 
     /**
      * @param args the command line arguments
@@ -173,10 +196,10 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenu mnuPrg;
+    private javax.swing.JMenuItem mnuPrgBeFajlbol;
     private javax.swing.JSpinner numVersenyzoElsoDb;
     private javax.swing.JTextField txtVersenyzoAtlag;
     private javax.swing.JTextField txtVersenyzoEmail;
