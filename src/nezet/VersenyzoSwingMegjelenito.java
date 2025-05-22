@@ -149,10 +149,7 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
         
             Versenyzo versenyzo = new Versenyzo(sor);
             
-            txtVersenyzoNev.setText(versenyzo.getNev());
-            txtVersenyzoEmail.setText(versenyzo.getEmail());
-            txtVersenyzoAtlag.setText(versenyzo.getAtlag()+"");
-            numVersenyzoElsoDb.setValue(versenyzo.getElsoDb());
+            megjelenites(versenyzo);
             
         } catch (IOException ex) {
             Logger.getLogger(VersenyzoSwingMegjelenito.class.getName()).log(Level.SEVERE, null, ex);
@@ -161,11 +158,25 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
 
     private void mnuPrgFixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPrgFixActionPerformed
         Versenyzo versenyzo = new Versenyzo("RókaRudi", "rr@r.hu", Math.E, 21);
+        megjelenites(versenyzo);
+    }//GEN-LAST:event_mnuPrgFixActionPerformed
+
+    private void megjelenites(Versenyzo versenyzo) {
         txtVersenyzoNev.setText(versenyzo.getNev());
         txtVersenyzoEmail.setText(versenyzo.getEmail());
-        txtVersenyzoAtlag.setText(versenyzo.getAtlag()+"");
+//        txtVersenyzoAtlag.setText(versenyzo.getAtlag()+"");
+        txtVersenyzoAtlag.setText(tizedesJegyek(versenyzo.getAtlag(), 2));
+//        txtVersenyzoAtlag.setText(tizedesJegyek(versenyzo.getAtlag()));
         numVersenyzoElsoDb.setValue(versenyzo.getElsoDb());
-    }//GEN-LAST:event_mnuPrgFixActionPerformed
+        
+        
+//        txtVersenyzoAtlag.setText(String.format("%.2f", versenyzo.getAtlag()));
+    }
+    
+    private String tizedesJegyek(double atlag, int pontossag) {
+        String formazo = "%." + pontossag + "f";
+        return formazo.formatted(atlag);
+    }
 
     /**
      * @param args the command line arguments
@@ -217,4 +228,5 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
     private javax.swing.JTextField txtVersenyzoEmail;
     private javax.swing.JTextField txtVersenyzoNev;
     // End of variables declaration//GEN-END:variables
+
 }
