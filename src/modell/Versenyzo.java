@@ -32,6 +32,17 @@ public class Versenyzo {
     public double getAtlag() {
         return atlag;
     }
+    
+    
+    /**
+     * Ez látszik
+     * @param pontossag tizedes száma
+     * @return double érték, de nem kerekített
+     */
+    public double getAtlagLevagTizedessel(int pontossag) {
+        int szorzo = (int)Math.pow(10, pontossag);
+        return (int)(atlag * szorzo) / (double) szorzo;
+    }
 
     public int getElsoDb() {
         return elsoDb;

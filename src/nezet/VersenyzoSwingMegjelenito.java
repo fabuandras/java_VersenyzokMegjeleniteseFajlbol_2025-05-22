@@ -1,16 +1,22 @@
 package nezet;
 
+import java.awt.List;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import modell.Versenyzo;
 
 public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
 
+    private List <Versenyzo> versenyzok;
+    
     public VersenyzoSwingMegjelenito() {
         initComponents();
+        versenyzok = new Arraylist<>();
     }
 
     /**
@@ -31,6 +37,8 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
         txtVersenyzoAtlag = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         numVersenyzoElsoDb = new javax.swing.JSpinner();
+        jPanel2 = new javax.swing.JPanel();
+        cmbVersenyzok = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuPrg = new javax.swing.JMenu();
         mnuPrgBeFajlbol = new javax.swing.JMenuItem();
@@ -97,7 +105,32 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
                     .addComponent(txtVersenyzoAtlag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(numVersenyzoElsoDb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Nevezett versenyzők"));
+
+        cmbVersenyzok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbVersenyzokActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cmbVersenyzok, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cmbVersenyzok, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         mnuPrg.setText("Program");
@@ -128,13 +161,19 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -145,11 +184,18 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
 
     private void mnuPrgBeFajlbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPrgBeFajlbolActionPerformed
         try {
-            String sor = Files.readString(Path.of("versenyzok.txt"));
-        
-            Versenyzo versenyzo = new Versenyzo(sor);
+            //String fajlTartalma = Files.readString(Path.of("versenyzok.txt"));
+            //String[] sorok = fajlTartalma.split("\r\n");
+            List <String> sorok = Files.readAllLines(Path.of("versenyzok.txt"));
             
-            megjelenites(versenyzo);
+            for (int i = 0; i < sorok.size(); i++) {
+                String sor = sorok.get(i);
+                Versenyzo versenyzo = new Versenyzo(sor);
+                //versenyzok[i] = versenyzo;
+                versenyzok.add(versenyzo);
+                cmbVersenyzok.addItem(versenyzo.getNev());
+            }
+            megjelenites(versenyzok.get(0));
             
         } catch (IOException ex) {
             Logger.getLogger(VersenyzoSwingMegjelenito.class.getName()).log(Level.SEVERE, null, ex);
@@ -159,6 +205,7 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
     private void mnuPrgFixActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPrgFixActionPerformed
         Versenyzo versenyzo = new Versenyzo("RókaRudi", "rr@r.hu", Math.E, 21);
         megjelenites(versenyzo);
+        System.out.println("double: " + versenyzo.getAtlagLevagTizedessel(2));
     }//GEN-LAST:event_mnuPrgFixActionPerformed
 
     private void megjelenites(Versenyzo versenyzo) {
@@ -166,9 +213,6 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
         txtVersenyzoEmail.setText(versenyzo.getEmail());
         txtVersenyzoAtlag.setText(tizedesJegyek(versenyzo.getAtlag()));
         numVersenyzoElsoDb.setValue(versenyzo.getElsoDb());
-        
-        
-//        txtVersenyzoAtlag.setText(String.format("%.2f", versenyzo.getAtlag()));
     }
     
     private String tizedesJegyek(double atlag) {
@@ -216,12 +260,14 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbVersenyzok;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JMenu mnuPrg;
     private javax.swing.JMenuItem mnuPrgBeFajlbol;
     private javax.swing.JMenuItem mnuPrgFix;
