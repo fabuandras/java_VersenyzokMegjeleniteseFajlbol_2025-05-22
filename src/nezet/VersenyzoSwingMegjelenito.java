@@ -164,13 +164,15 @@ public class VersenyzoSwingMegjelenito extends javax.swing.JFrame {
     private void megjelenites(Versenyzo versenyzo) {
         txtVersenyzoNev.setText(versenyzo.getNev());
         txtVersenyzoEmail.setText(versenyzo.getEmail());
-//        txtVersenyzoAtlag.setText(versenyzo.getAtlag()+"");
-        txtVersenyzoAtlag.setText(tizedesJegyek(versenyzo.getAtlag(), 2));
-//        txtVersenyzoAtlag.setText(tizedesJegyek(versenyzo.getAtlag()));
+        txtVersenyzoAtlag.setText(tizedesJegyek(versenyzo.getAtlag()));
         numVersenyzoElsoDb.setValue(versenyzo.getElsoDb());
         
         
 //        txtVersenyzoAtlag.setText(String.format("%.2f", versenyzo.getAtlag()));
+    }
+    
+    private String tizedesJegyek(double atlag) {
+        return tizedesJegyek(atlag, 2);
     }
     
     private String tizedesJegyek(double atlag, int pontossag) {
